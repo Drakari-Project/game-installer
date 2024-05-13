@@ -163,6 +163,12 @@ input[type=text] {
     height: 40px;
 }
 
+.radio-group {
+    display: flex;
+    flex-direction: column;
+}
+
+
 ::placeholder {
     opacity: 0.25;
 }

@@ -40,5 +40,5 @@
 </form>
 <div class="crossbar">
     <a class="return" href="/">Return</a>
-    <a class="continue" href="/installer/game">Next</a>
+    <a class="continue" href="/installer/type">Next</a>
 </div>
