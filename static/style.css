@@ -1,0 +1,201 @@
+:root {
+    --celadon: #b8d8baff;
+    --carrot-orange: #f18f01ff;
+    --blue-munsell: #048ba8ff;
+    --charcoal: #2e4057ff;
+    --jet: #2f2d2eff;
+}
+
+html {
+    width: 100vw;
+    height: 100vh;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0px;
+    display: block flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--charcoal);
+}
+
+a {
+    font-family: inherit;
+    font-style: regular;
+    text-decoration: none;
+    color: var(--blue-munsell);
+}
+
+.button {
+    color: var(--jet);
+    color: var(--jet);
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    background-image: linear-gradient(to left, white 50%, var(--blue-munsell) 50%);
+    border-color: var(--blue-munsell);
+    border-style: solid;
+    border-width: 0 0 0 5px;
+    transition: background-position .3s;
+    padding: 0 10px;
+    box-sizing: border-box;
+    justify-content: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.button:hover {
+    background-position: 0 0;
+}
+
+a.button {
+    font-size: 18px;
+    min-height: 50px;
+    width: 100%;
+    text-align: left;
+}
+
+a.next::after {
+    font-family: fontAwesome;
+    content: "\f061\00a0";
+    float: right;
+}
+
+a.return {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    float: left;
+}
+
+a.return::before {
+    font-family: fontAwesome;
+    content: "\f060\00a0";
+    float: left;
+}
+
+a.continue {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    float: right;
+}
+
+a.continue::after {
+    font-family: fontAwesome;
+    content: "\00a0\f061";
+    float: right;
+}
+
+h1 {
+    text-align: center;
+    margin: 0 0 25px 0;
+}
+
+.important {
+    font-style: italic;
+    text-align: center;
+    margin: 0;
+}
+
+.crossbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+form > div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 2px;
+    align-items: center;
+}
+
+form > div > p {
+    width: 200px;
+    margin: 0;
+}
+
+label.fileinput {
+    cursor: pointer;
+    width: 100%;
+    background-color: white;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+label.fileinput::after {
+    font-family: fontAwesome;
+    content: "\f03e\00a0";
+    float: right;
+}
+
+input[type=file] {
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+input[type=text] {
+    font-size: 20px;
+    background-color: white;
+    border-style: solid;
+    border-width: 0 0 2px 0;
+    border-color: var(--blue-munsell);
+    box-sizing: border-box;
+    transition: border-width .2s;
+    padding: 5px;
+    width: 100%;
+    height: 40px;
+}
+
+::placeholder {
+    opacity: 0.25;
+}
+
+input[type=text]:focus {
+    outline: none;
+    border-width: 0 0 3px 0;
+}
+
+textarea {
+    resize: none;
+    border: none;
+    width: 100%;
+    height: 100px;
+    padding: 5px;
+    font-family: inherit;
+}
+
+textarea:focus {
+    outline: none;
+}
+
+#contents {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+    background-color: var(--celadon);
+    color: var(--jet);
+    width: 400px;
+    font-family: "Cabin", sans-serif;
+}
+
+#contents > * {
+    outline: none;
+}

@@ -1,2 +1,3 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<h1>Welcome to Drakari.</h1>
+<a class="button next" href="/installer">Install a Game</a>
+<a class="button next">Configure</a>
