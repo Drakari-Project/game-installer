@@ -24,6 +24,7 @@
     </div>
     <div>
         <p>Cover</p>
+
         <label class="fileinput button">
             {#if $cover}
                 {$cover.name}

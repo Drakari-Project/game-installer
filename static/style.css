@@ -166,8 +166,46 @@ input[type=text] {
 .radio-group {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
+.radio-group > label {
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: white;
+    padding: 10px;
+    transition: transform .1s, background-color .1s;
+}
+
+.radio-group > label > input[type="radio"] {
+    appearance: none;
+}
+
+.radio-group > label > input[type="radio"]::before {
+    font-family: fontAwesome;
+    content: "\f00c";
+    opacity: 0;
+    transition: opacity .1s;
+}
+
+.radio-group > label > input[type="radio"]:checked::before {
+    opacity: 1;
+}
+
+.radio-group > label:hover {
+    transform: scale(1.03);
+}
+
+.radio-group > label:active {
+    transform: scale(.99);
+}
+
+.radio-group > label.selected {
+    background-color: var(--blue-munsell);
+}
 
 ::placeholder {
     opacity: 0.25;
@@ -204,4 +242,5 @@ textarea:focus {
 
 #contents > * {
     outline: none;
+    appearance: none !important;
 }
