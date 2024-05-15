@@ -15,6 +15,10 @@ app.post('/publish/codeorg', uploadCodeOrg.single('game-file'), (req, res, next)
         deleteFile(req.file);
     }
     unzipFile(req.file)
+    const folderName = getFolderNameFromZip(req.file);
+    folderName.then((value) => {
+        launchCodeorgConfig(req.file, value.slice(0, -2));
+    })
     console.log(req.file);
     
 });
@@ -33,6 +37,24 @@ function deleteFile(file) {
 
 function unzipFile(file) {
     childProc.exec('unzip ' + "'"+ file.destination + '/' + file.originalname + "' " + '-d ' + file.destination, (err, stdout, stderr) => {
+        if (err) throw err;
+        if (stderr) console.log(stderr);
+    });
+}
+
+function getFolderNameFromZip(file) {
+    return new Promise((resolve, reject) => {
+        childProc.exec(`unzip -Z -1 '${file.destination + '/' + file.originalname}' | head -n 1`, (err, stdout, stderr) => {
+            if (err) { reject(err.message); throw err; };
+            if (stderr) { console.log(stderr); reject(stderr) }
+            resolve(stdout);
+        })
+    })
+    
+}
+
+function launchCodeorgConfig(file, dirName) {
+    childProc.exec(`./config/codeorg/processJsProject '${file.destination + '/' + dirName}'`, (err, stdout, stderr) => {
         if (err) throw err;
         if (stderr) console.log(stderr);
     });

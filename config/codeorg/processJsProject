@@ -1,0 +1,2 @@
+sed -i bak '/initMobileControls/d' "$1/code.js"
+cp ./config/codeorg/gamelab-api-patched.js "$1/gamelab-api.js"
