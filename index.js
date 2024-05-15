@@ -7,21 +7,26 @@ const port = 3000
 const uploadCodeOrg = multer({dest: 'games/codeorg'});
 app.post('/publish/codeorg', uploadCodeOrg.single('game-file'), (req, res, next) => {
     res.sendStatus(200);
-    const SAFE_NAME = req.file.originalname.replace(" ", "-");
-
-    renameFile(req.file.path, req.file.destination, SAFE_NAME);
-    unzipFile(req.file.destination, SAFE_NAME);
+    if (!fs.existsSync(req.file.destination + '/' + req.file.originalname)) {
+        renameFile(req.file, req.file.originalname);
+    } else {
+        renameFile(req.file, req.file.originalname);
+    }
+   
+    unzipFile(req.file)
+    req.destin
     console.log(req.file);
     
 });
 
-function renameFile(originalPath, destination, name) {
-    fs.rename(originalPath, destination + '/' + name, (err) => {
+function renameFile(file, name) {
+    fs.rename(file.path, file.destination + '/' + name, (err) => {
         if(err) throw err;    
     });
 }
-function unzipFile(path, name) {
-    childProc.exec('unzip ' + "'"+ path + '/' + name + "' " + '-d ' + path, (err, stdout, stderr) => {
+
+function unzipFile(file) {
+    childProc.exec('unzip ' + "'"+ file.destination + '/' + file.originalname + "' " + '-d ' + file.destination, (err, stdout, stderr) => {
         if (err) throw err;
         if(stderr) console.log(stderr);
     });
