@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
     import { Select } from '$lib/components';
-    import { exec_type } from '$lib/installer_stores.ts';
+    import { exec_type, cover } from '$lib/installer_stores.ts';
 
     const options = ["codeorg", "native", "emulator"];
     const names = ["Code.org", "Native Executable", "Emulatable ROM"];
