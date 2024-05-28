@@ -6138,11 +6138,17 @@
 				playSound: function(t) {
 					var e = arguments.length > 1 && void 0 !== arguments[1] && arguments[1],
 						r = arguments.length > 2 ? arguments[2] : void 0;
-					return i(null, "playSound", {
-						url: t,
-						loop: e,
-						callback: r
-					})
+					//START PATCHED CODE -- PATCH:0.1.0
+					let sound = new Audio(t);
+					sound.loop = e;
+					sound.play().then(r);
+					// return i(null, "playSound", {
+					// 	url: t,
+					// 	loop: e,
+					// 	callback: r
+					// })
+					return;
+					//END PATCHED CODE
 				},
 				stopSound: function(t) {
 					return i(null, "stopSound", {
