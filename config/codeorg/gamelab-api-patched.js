@@ -3147,7 +3147,11 @@
 				if (0 === (t = t || "").length) return "/blockly/media/1x1.gif";
 				if (f.test(t)) return t.replace(l, m);
 				var r = (0, i.getStore)().getState();
-				null !== (e = r.pageConstants) && void 0 !== e && e.isCurriculumLevel || (t = t.replace(h, ""));
+				//START PATCHED CODE - PATCH:0.1.1
+				//bro there is no fucking way they didn't test this shit
+				//r.pageConstants is my biggest opp
+				//null !== (e = r.pageConstants) && void 0 !== e && e.isCurriculumLevel || (t = t.replace(h, ""));
+				//END PATCHED CODE
 				if (p.test(t)) return t.replace(h, (n = r.level.name, "/level_starter_assets/".concat(n, "/")));
 				var n;
 				if (-1 !== t.indexOf("/") || !b) return t;
@@ -6111,9 +6115,10 @@
 						n = (0, a.apiValidateType)(t, "playSound", "onEnded", t.onEnded, "function", a.OPTIONAL);
 					if (e) {
 						var i = o.fixPath(t.url);
-						s.default.getSingleton().isPlaying(i) && t.callback && r && t.callback(!1);
 						var u = !1;
-						"file:" === window.location.protocol && (u = !0), s.default.getSingleton().playURL(i, {
+						//START PATCHED CODE - PATCH:0.1.1
+						//don't force HTML5 for feature parity within code.org editor
+						"file:" === window.location.protocol /* && (u = !0)*/, s.default.getSingleton().playURL(i, {
 							volume: 1,
 							loop: !!t.loop,
 							forceHTML5: u,
@@ -6121,13 +6126,14 @@
 							callback: r && t.callback,
 							onEnded: n && t.onEnded
 						})
+						//END PATCHED CODE
 					}
 				},
 				stopSound: function(t) {
 					var e = (0, a.apiValidateType)(t, "stopSound", "url", t.url, "string", a.OPTIONAL);
 					if (t.url && e) {
 						var r = o.fixPath(t.url);
-						s.default.getSingleton().isPlaying(r) && s.default.getSingleton().stopLoopingAudio(r)
+						s.default.getSingleton().isPlaying(t.url) && s.default.getSingleton().stopLoopingAudio(t.url)
 					} else s.default.getSingleton().stopAllAudio()
 				},
 				playSpeech: function(t) {
@@ -6138,17 +6144,11 @@
 				playSound: function(t) {
 					var e = arguments.length > 1 && void 0 !== arguments[1] && arguments[1],
 						r = arguments.length > 2 ? arguments[2] : void 0;
-					//START PATCHED CODE -- PATCH:0.1.0
-					let sound = new Audio(t);
-					sound.loop = e;
-					sound.play().then(r);
-					// return i(null, "playSound", {
-					// 	url: t,
-					// 	loop: e,
-					// 	callback: r
-					// })
-					return;
-					//END PATCHED CODE
+					return i(null, "playSound", {
+						url: t,
+						loop: e,
+						callback: r
+					})
 				},
 				stopSound: function(t) {
 					return i(null, "stopSound", {
