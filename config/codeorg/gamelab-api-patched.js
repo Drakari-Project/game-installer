@@ -6116,6 +6116,7 @@
 					if (e) {
 						var i = o.fixPath(t.url);
 						var u = !1;
+						s.default.getSingleton().isPlaying(i) && t.callback && r && t.callback(!1);
 						//START PATCHED CODE - PATCH:0.1.1
 						//don't force HTML5 for feature parity within code.org editor
 						"file:" === window.location.protocol /* && (u = !0)*/, s.default.getSingleton().playURL(i, {
@@ -6133,7 +6134,7 @@
 					var e = (0, a.apiValidateType)(t, "stopSound", "url", t.url, "string", a.OPTIONAL);
 					if (t.url && e) {
 						var r = o.fixPath(t.url);
-						s.default.getSingleton().isPlaying(t.url) && s.default.getSingleton().stopLoopingAudio(t.url)
+						s.default.getSingleton().isPlaying(r) && s.default.getSingleton().stopLoopingAudio(r)
 					} else s.default.getSingleton().stopAllAudio()
 				},
 				playSpeech: function(t) {
