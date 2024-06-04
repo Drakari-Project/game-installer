@@ -18,6 +18,9 @@ app.post('/publish/codeorg', uploadCodeOrg.single('game-file'), (req, res, next)
     const folderName = getFolderNameFromZip(req.file);
     folderName.then((value) => {
         launchCodeorgConfig(req.file, value.slice(0, -2));
+        fs.rm(req.file.destination + '/' + req.file.originalname, (err) => {
+            if (err) throw err;
+        });
     })
     console.log(req.file);
     
