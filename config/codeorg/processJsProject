@@ -1,2 +1,5 @@
-sed -i bak '/initMobileControls/d' "$1/code.js"
+# make sure to switch gsed to sed on linux!
+gsed -i '/initMobileControls/d' "$1/code.js"
+gsed -i '35i document.querySelector("#sketch").style = "";' "$1/code.js"
+echo "\n#sketch {\n\tposition: fixed;\n\ttop: 50%;\n\tleft: 50%;\n\ttransform: translate(-50%, -50%);\n}\ncanvas {\n\tscale: 2.2;\n}" >> "$1/gamelab.css"
 cp ./config/codeorg/gamelab-api-patched.js "$1/gamelab-api.js"
