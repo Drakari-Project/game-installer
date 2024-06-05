@@ -4,8 +4,9 @@ const childProc = require('child_process');
 const fs = require('fs');
 const app = express();
 const port = 3000
-const uploadCodeOrg = multer({dest: 'games/codeorg'});
-app.post('/publish/codeorg', uploadCodeOrg.single('game-file'), (req, res, next) => {
+const YEAR = '2024'; //CHANGE THIS EVERY YEAR!
+const upload = multer({dest: 'gamedata/' + YEAR});
+app.post('/publish/codeorg', upload.single('game-file'), (req, res, next) => {
     
     if (!fs.existsSync(req.file.destination + '/' + req.file.originalname)) {
         renameFile(req.file, req.file.originalname);
