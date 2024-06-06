@@ -5,7 +5,7 @@ const fs = require('fs');
 const app = express();
 const port = 3000
 const YEAR = '2024'; //CHANGE THIS EVERY YEAR!
-const upload = multer({dest: 'gamedata/' + YEAR});
+const upload = multer({dest: '/home/drakari/gamedata/' + YEAR});
 app.post('/publish/codeorg', upload.single('game-file'), (req, res, next) => {
     
     if (!fs.existsSync(req.file.destination + '/' + req.file.originalname)) {
@@ -58,7 +58,7 @@ function getFolderNameFromZip(file) {
 }
 
 function launchCodeorgConfig(file, dirName) {
-    childProc.exec(`./config/codeorg/processJsProject '${file.destination + '/' + dirName}'`, (err, stdout, stderr) => {
+    childProc.exec(`./config/codeorg/processJsProject '${file.destination + '/' + dirName}' '${dirName}' ${YEAR}`, (err, stdout, stderr) => {
         if (err) throw err;
         if (stderr) console.log(stderr);
     });
