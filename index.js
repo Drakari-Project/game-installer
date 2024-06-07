@@ -8,23 +8,26 @@ const YEAR = '2024'; //CHANGE THIS EVERY YEAR!
 const upload = multer({dest: '/home/drakari/gamedata/' + YEAR});
 app.post('/publish/codeorg', upload.single('game-file'), (req, res, next) => {
     
-    if (!fs.existsSync(req.file.destination + '/' + req.file.originalname)) {
-        renameFile(req.file, req.file.originalname);
-        res.sendStatus(200);
-    } else {
-        res.status(400).send('Game already exists!');
-        deleteFile(req.file);
-    }
-    unzipFile(req.file)
     const folderName = getFolderNameFromZip(req.file);
     folderName.then((value) => {
-        launchCodeorgConfig(req.file, value.slice(0, -2));
-        fs.rm(req.file.destination + '/' + req.file.originalname, (err) => {
-            if (err) throw err;
-        });
+        if (!fs.existsSync(req.file.destination + '/' + value.slice(0, -1))) {
+            res.sendStatus(200);
+            unzipFile(req.file);
+            launchCodeorgConfig(req.file, value.slice(0, -2));
+            fs.rm(req.file.path, (err) => {
+                if (err) throw err;
+            });
+        } else {
+            res.status(400).send('Game already exists!');
+            deleteFile(req.file);
+        }
+        
     })
     console.log(req.file);
     
+});
+app.get('/', (req, res, next) => {
+    res.send('<p>Current year: <b>' + YEAR + '</b></p>' + '<p>Status: ' + 'running</p>');
 });
 
 function renameFile(file, name) {
@@ -40,7 +43,7 @@ function deleteFile(file) {
 }
 
 function unzipFile(file) {
-    childProc.exec('unzip ' + "'"+ file.destination + '/' + file.originalname + "' " + '-d ' + file.destination, (err, stdout, stderr) => {
+    childProc.exec('unzip ' + "'"+ file.path + "'" + ' -d ' + file.destination, (err, stdout, stderr) => {
         if (err) throw err;
         if (stderr) console.log(stderr);
     });
@@ -48,7 +51,7 @@ function unzipFile(file) {
 
 function getFolderNameFromZip(file) {
     return new Promise((resolve, reject) => {
-        childProc.exec(`unzip -Z -1 '${file.destination + '/' + file.originalname}' | head -n 1`, (err, stdout, stderr) => {
+        childProc.exec(`unzip -Z -1 '${file.path}' | head -n 1`, (err, stdout, stderr) => {
             if (err) { reject(err.message); throw err; };
             if (stderr) { console.log(stderr); reject(stderr) }
             resolve(stdout);
